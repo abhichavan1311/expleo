@@ -55,6 +55,7 @@ Install the following plugins:
 - **Git Plugin**: For managing code repositories.  
 - **Pipeline Plugin**: To create Jenkins pipelines.  
 - **Blue Ocean**: For an improved UI experience.  
+- **Maven IntegrationVersion**: provides a deep integration between Jenkins and Maven.
 
 ### **4. Jenkins installation using linux**
 
