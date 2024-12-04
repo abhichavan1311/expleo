@@ -13,10 +13,23 @@ Welcome to the **ExpleoGroup Jenkins Task Documentation**! This document provide
 1. [Introduction](#introduction)  
 2. [Setup and Prerequisites](#setup-and-prerequisites)  
 3. [Task Overview](#task-overview)  
+   - [Initial Creation and Installation of the Jenkins Jobs](#initial-creation-and-installation-of-the-jenkins-jobs)  
+   - [Simple Build Using Maven Application](#simple-build-using-maven-application)  
+   - [Publish Test Case Reports on Jenkins UI Graph](#publish-test-case-reports-on-jenkins-ui-graph)  
+   - [Archive the Artifacts in CI/CD Using Post Build Action](#archive-the-artifacts-in-ci-cd-using-post-build-action)  
+   - [Trigger Email if There Is an Unstable Build](#trigger-email-if-there-is-an-unstable-build)  
+   - [Authenticate as Valid Jenkins User to GitHub Repository, Create Job and Build It](#authenticate-as-valid-jenkins-user-to-github-repository-create-job-and-build-it)  
+   - [Change Jenkins IP If the Instance Is Restarted](#change-jenkins-ip-if-the-instance-is-restarted)  
+   - [Trigger Job Using Webhook, Poll SCM, or Build Periodically](#trigger-job-using-webhook-poll-scm-or-build-periodically)  
+   - [Master-Slave Configuration](#master-slave-configuration)  
+   - [Using GitHub with IDE (VSCode)](#using-github-with-ide-vscode)  
+   - [Create Pipeline Script from SCM with Different Scenarios](#create-pipeline-script-from-scm-with-different-scenarios)
+
+
 4. [Task Execution Steps](#task-execution-steps)  
 5. [Best Practices](#best-practices)  
 6. [Troubleshooting](#troubleshooting)  
-7. [Additional Resources](#additional-resources)
+
 
 ---
 
@@ -81,7 +94,7 @@ sudo apt-get install jenkins
 
 jenkins --version
 
-sudo vi /etc/default/jenkins
+sudo vi /etc/default/jenkins (add JAVA_HOME in this file)
 
 sudo systemctl restart jenkins
 
@@ -132,19 +145,6 @@ and set
 
 ## Task Overview  
 
+For the tasks details kindly refer jenkins task.docx file given in the github repo itself.
 
-### **Task 1: Build Automation**  
-Automate the process of building a software application. This ensures consistency and reduces manual effort.  
-
-### **Task 2: Test Automation**  
-Run automated tests to ensure the quality of the software.  
-
-### **Task 3: Deployment**  
-Automate the deployment process to production or staging environments.  
-
-### **Task 4: Monitoring and Feedback**  
-Set up alerts and feedback mechanisms to monitor the build and deployment processes.  
-
----
-
-Let me know the specifics you'd like to include or edit, and I'll update accordingly!
+Note: Due to github restrictions you might have to use raw format which you can download by clicking on it.
