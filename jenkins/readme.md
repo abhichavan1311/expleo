@@ -65,9 +65,11 @@ To begin, ensure the following prerequisites are met:
 
 ### **3. Plugins Required**  
 Install the following plugins:  
-- **Git Plugin**: For managing code repositories.  
-- **Pipeline Plugin**: To create Jenkins pipelines.  
+- **Git Plugin**: For managing code repositories. (bydefault will be there in most of the versions) 
+- **Pipeline Plugin**: To create Jenkins pipelines.(bydefault will be there in most of the versions) 
 - **Blue Ocean**: For an improved UI experience.  
+- **Stage View**: visual representation of the stages in a pipeline, allowing users to track the progress and status of each stage during execution.
+- **Email Extension Plugin**: For SMTP server configuration
 - **Maven IntegrationVersion**: provides a deep integration between Jenkins and Maven.
 
 ### **4. Jenkins installation using linux**
