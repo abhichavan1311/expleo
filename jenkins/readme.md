@@ -148,3 +148,11 @@ and set
 For the tasks details kindly refer jenkins task.docx file given in the github repo itself.
 
 Note: Due to github restrictions you might have to use raw format which you can download by clicking on it.
+
+## Best Practices
+
+yet to be added
+
+## Troubleshooting
+
+yet to be added
