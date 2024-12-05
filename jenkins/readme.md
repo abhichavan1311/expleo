@@ -211,7 +211,7 @@ As you can see in below image maven is not installed on my slave1
 
 but my job ran successfully on it,checkout below logs
 
-![Maven_project1](images/mvn_not_intsalled.png)
+![Maven_project1](images/maven_project1.png)
 ![Maven_project2](images/maven_project2.png)
 
 **2. Jenkins defaults**
