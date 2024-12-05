@@ -365,7 +365,7 @@ drwxr-xr-x 2 jenkins jenkins 4096 Dec  3 11:55 scripts
         JENKINS_HOME=/var/lib/jenkins
 - Setup JAVA_HOME to avoid any java related confusions, specifically if you have multiple java installed.
 
-**Significance of Updating the Jenkins URL when the instance IP changed:**
+3. **Significance of Updating the Jenkins URL when the instance IP changed:**
 
 1. Webhook Integration (e.g., with GitHub or GitLab):
 
@@ -393,7 +393,7 @@ Problem: Some Jenkins scripts or plugins rely on the configured Jenkins URL for 
 Impact: Outdated URLs in scripts or plugins might cause failures or unexpected behavior.
 
 
-**what is the difference in name of the node and label in jenkins**
+4. **what is the difference in name of the node and label in jenkins**
 
 1. Node (or Agent) -
 
