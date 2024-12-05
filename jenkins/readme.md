@@ -163,7 +163,8 @@ yet to be added
 ## Additional Points
 
 1. Do we need maven installed on slave ?
-Ans: Maven Installed on Master (Available to Slave): If you’ve configured the Maven installation on the Jenkins master and the jobs are configured to use that installation, Jenkins can invoke Maven remotely on the slave without requiring Maven to be installed on the slave itself.
+
+Ans: No, Maven Installed on Master (Available to Slave): If you’ve configured the Maven installation on the Jenkins master and the jobs are configured to use that installation, Jenkins can invoke Maven remotely on the slave without requiring Maven to be installed on the slave itself.
 
 Let's take below example:
 
