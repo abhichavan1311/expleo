@@ -29,6 +29,7 @@ Welcome to the **ExpleoGroup Jenkins Task Documentation**! This document provide
 4. [Task Execution Steps](#task-execution-steps)  
 5. [Best Practices](#best-practices)  
 6. [Troubleshooting](#troubleshooting)  
+7. [Additional Points](#Additional-Points)
 
 
 ---
@@ -158,3 +159,218 @@ yet to be added
 ## Troubleshooting
 
 yet to be added
+
+## Additional Points
+
+1. Do we need maven installed on slave ?
+Ans: Maven Installed on Master (Available to Slave): If you’ve configured the Maven installation on the Jenkins master and the jobs are configured to use that installation, Jenkins can invoke Maven remotely on the slave without requiring Maven to be installed on the slave itself.
+
+Let's take below example:
+
+
+Pipeline_job :
+
+pipeline {
+    agent {
+        label 'slave1'
+    }
+
+    parameters {
+         string defaultValue: 'chavan', name: 'LASTNAME'
+    }
+
+    environment {
+         NAME = "Abhishek"
+    }
+
+
+    tools {
+         maven 'maven1'
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+                sh 'ls -l target/' 
+                echo "hi $Name ${params.LASTNAME}"
+            }
+        }
+        stage('Archive') {
+            steps {
+                echo "Archiving artifacts"
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }
+    }
+}
+
+As you can see in below image maven is not installed on my slave1
+![Maven_not_Installation](images/mvn_not_intsalled.png)
+
+
+but my job ran successfully on it,checkout below logs
+
+![Maven_project1](images/mvn_not_intsalled.png)
+![Maven_project2](images/maven_project2.png)
+
+**2. Jenkins defaults**
+
+JENKINS_HOME: 
+ubuntu@ip-172-31-23-191:/var/lib/jenkins$ ls -lt 
+
+Important Files and Directories
+
+config.xml -
+Use: Stores Jenkins' global configuration, such as security settings, system settings, and tool configurations.
+Do not delete: Essential for Jenkins operation.
+
+jobs/ - 
+Use: Contains subdirectories for each job. Inside each job, you’ll find configurations (config.xml), build history, and other metadata.
+Important: This directory stores all job data and history.
+
+/var/lib/jenkins/jobs contents:
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins$ cd jobs/
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs$ ls
+
+final-maven-project  maven-project  pipeline_job  slave-job  tp
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs$ cd maven-project/
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project$ ls -lt
+
+total 12
+
+drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 12:27 builds
+
+-rw-r--r-- 1 jenkins jenkins 2075 Dec  3 12:27 config.xml
+
+-rw-r--r-- 1 jenkins jenkins    2 Dec  3 12:27 nextBuildNumber
+
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project$ cd builds/
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds$ ls -lt
+
+total 20
+
+drwxr-xr-x 4 jenkins jenkins 4096 Dec  3 12:27 4
+
+-rw-r--r-- 1 jenkins jenkins  124 Dec  3 12:27 permalinks
+
+drwxr-xr-x 4 jenkins jenkins 4096 Dec  3 11:57 3
+
+drwxr-xr-x 3 jenkins jenkins 4096 Dec  3 11:55 2
+
+drwxr-xr-x 3 jenkins jenkins 4096 Dec  3 11:51 1
+
+-rw-r--r-- 1 jenkins jenkins    0 Dec  3 11:50 legacyIds
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds$ cd 4
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4$ ls -lt
+
+total 60
+
+-rw-r--r-- 1 jenkins jenkins 17748 Dec  3 12:27 build.xml
+
+-rw-r--r-- 1 jenkins jenkins 21037 Dec  3 12:27 log
+
+drwxr-xr-x 2 jenkins jenkins  4096 Dec  3 12:27 workflow-completed
+
+-rw-r--r-- 1 jenkins jenkins    99 Dec  3 12:27 log-index
+
+drwxr-xr-x 3 jenkins jenkins  4096 Dec  3 12:27 archive
+
+-rw-r--r-- 1 jenkins jenkins   478 Dec  3 12:27 changelog2445842313786596415.xml
+
+
+**Important: Where does jenkins stores the artifacts:**
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4/archive/target$ ls -lt
+
+total 4
+
+-rw-rw-r-- 1 jenkins jenkins 2730 Dec  3 12:27 my-app-1.0-SNAPSHOT.jar
+
+
+
+workspace/ -
+Use: Stores temporary files and build artifacts for each job's workspace during the build process.
+Safe to clean periodically: Only delete unused job workspaces to free space, as Jenkins can recreate them.
+
+plugins/ -
+Use: Stores all Jenkins plugin .jpi or .hpi files.
+Do not delete: Needed for plugin functionality. Deleting plugins may cause Jenkins to break.
+
+credentials.xml -
+Use: Stores encrypted credentials (e.g., usernames, passwords, tokens).
+Do not edit/delete manually: Modifications here may corrupt credentials.
+
+users/- 
+Use: Stores user account information and settings for Jenkins users.
+Do not delete: Required for user authentication and permissions.
+
+logs/ -
+Use: Contains Jenkins system and build logs.
+Safe to clean periodically: Clear old logs to save space, as new logs will be generated.
+
+
+WorkSpace:
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace$ ls -lt
+
+total 40
+
+drwxr-xr-x 6 jenkins jenkins 4096 Dec  4 05:51 final-maven-project
+
+drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 13:02 java-maven-sample-war-project
+
+drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 11:55 maven-project\
+
+
+**what does project include?**
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$ ls -lt
+
+total 20
+
+-rw-r--r-- 1 jenkins jenkins 1078 Dec  3 11:55 LICENSE.txt
+
+-rw-r--r-- 1 jenkins jenkins  752 Dec  3 11:55 README.md
+
+drwxr-xr-x 3 jenkins jenkins 4096 Dec  3 11:55 jenkins
+
+-rw-r--r-- 1 jenkins jenkins 2387 Dec  3 11:55 pom.xml
+
+drwxr-xr-x 4 jenkins jenkins 4096 Dec  3 11:55 src
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$ cd jenkins/
+
+ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project/jenkins$ ls -lt
+
+total 8
+
+-rw-r--r-- 1 jenkins jenkins  414 Dec  3 11:55 Jenkinsfile
+
+drwxr-xr-x 2 jenkins jenkins 4096 Dec  3 11:55 scripts
+
+
+**Importance of /etc/defaults/jenkins file:**
+- Startup Configuration: It contains options that the jenkins service reads during startup, such as Java options, ports, and paths.
+- Environment Variables: Sets environment variables that the Jenkins process can use.
+- Customizations: Allows administrators to modify Jenkins settings without editing the main service file (e.g., /lib/systemd/system/jenkins.service).
+
+- Common Parameters in /etc/default/jenkins
+
+- Jenkins Port: Configures the port Jenkins will use for its web interface.
+
+        HTTP_PORT=8080
+- Jenkins Home Directory: Sets the location of the Jenkins home directory.
+
+        JENKINS_HOME=/var/lib/jenkins
+- Setup JAVA_HOME to avoid any java related confusions, specifically if you have multiple java installed.
