@@ -216,10 +216,9 @@ but my job ran successfully on it,checkout below logs
 
 **2. Jenkins defaults**
 
-JENKINS_HOME: 
-ubuntu@ip-172-31-23-191:/var/lib/jenkins$ ls -lt 
+**JENKINS_HOME: ubuntu@ip-172-31-23-191:/var/lib/jenkins$ ls -lt**
 
-Important Files and Directories
+**Important Files and Directories**
 
 config.xml -
 Use: Stores Jenkins' global configuration, such as security settings, system settings, and tool configurations.
@@ -229,19 +228,20 @@ jobs/ -
 Use: Contains subdirectories for each job. Inside each job, you’ll find configurations (config.xml), build history, and other metadata.
 Important: This directory stores all job data and history.
 
-/var/lib/jenkins/jobs contents:
+**/var/lib/jenkins/jobs contents:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins$ cd jobs/
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs$ ls
 
-final-maven-project  maven-project  pipeline_job  slave-job  tp
+final-maven-project
+maven-project
+pipeline_job 
+slave-job  tp
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs$ cd maven-project/
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project$ ls -lt
-
-total 12
 
 drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 12:27 builds
 
@@ -253,8 +253,6 @@ drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 12:27 builds
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project$ cd builds/
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds$ ls -lt
-
-total 20
 
 drwxr-xr-x 4 jenkins jenkins 4096 Dec  3 12:27 4
 
@@ -272,8 +270,6 @@ ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds$ cd 4
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4$ ls -lt
 
-total 60
-
 -rw-r--r-- 1 jenkins jenkins 17748 Dec  3 12:27 build.xml
 
 -rw-r--r-- 1 jenkins jenkins 21037 Dec  3 12:27 log
@@ -290,8 +286,6 @@ drwxr-xr-x 3 jenkins jenkins  4096 Dec  3 12:27 archive
 **Important: Where does jenkins stores the artifacts:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4/archive/target$ ls -lt
-
-total 4
 
 -rw-rw-r-- 1 jenkins jenkins 2730 Dec  3 12:27 my-app-1.0-SNAPSHOT.jar
 
@@ -318,11 +312,9 @@ Use: Contains Jenkins system and build logs.
 Safe to clean periodically: Clear old logs to save space, as new logs will be generated.
 
 
-WorkSpace:
+**WorkSpace:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace$ ls -lt
-
-total 40
 
 drwxr-xr-x 6 jenkins jenkins 4096 Dec  4 05:51 final-maven-project
 
@@ -335,7 +327,6 @@ drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 11:55 maven-project\
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$ ls -lt
 
-total 20
 
 -rw-r--r-- 1 jenkins jenkins 1078 Dec  3 11:55 LICENSE.txt
 
@@ -352,8 +343,6 @@ ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$ cd jenkins/
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project/jenkins$ ls -lt
-
-total 8
 
 -rw-r--r-- 1 jenkins jenkins  414 Dec  3 11:55 Jenkinsfile
 
@@ -374,3 +363,80 @@ drwxr-xr-x 2 jenkins jenkins 4096 Dec  3 11:55 scripts
 
         JENKINS_HOME=/var/lib/jenkins
 - Setup JAVA_HOME to avoid any java related confusions, specifically if you have multiple java installed.
+
+**Significance of Updating the Jenkins URL when the instance IP changed:**
+
+1. Webhook Integration (e.g., with GitHub or GitLab):
+
+Problem: Webhooks from version control systems (e.g., GitHub, GitLab) need to send payloads to Jenkins for triggering builds. These webhooks point to the Jenkins URL (e.g., http://<instance-ip>:8080 or https://jenkins.example.com).
+Impact: If the IP changes but the Jenkins URL in webhook settings isn't updated, the webhooks will fail because they can't reach the Jenkins instance.
+
+2. Remote Access for Users and Tools:
+
+Problem: Users, build tools, and scripts often interact with Jenkins through its configured URL. If the IP address changes but the URL isn't updated, they won't be able to reach the Jenkins instance.
+Impact: This can lead to disruptions in CI/CD pipelines, failed builds, or inability to trigger jobs manually.
+
+3. Agent Communication:
+
+Problem: Jenkins agents (slaves) communicate with the master via the Jenkins URL. If the URL is outdated, agents might fail to connect, disrupting builds running on those agents.
+Impact: The build system could partially or fully break, depending on the reliance on agents.
+
+4. Email Notifications and Links:
+
+Problem: Jenkins includes the configured Jenkins URL in various notifications (e.g., email or Slack) and logs. If the URL is incorrect, links to the build dashboard or artifacts in these notifications will be broken.
+Impact: Users won't be able to easily navigate to Jenkins for debugging or reviewing builds.
+
+5. Scripts and Plugins:
+
+Problem: Some Jenkins scripts or plugins rely on the configured Jenkins URL for accessing resources or triggering jobs.
+Impact: Outdated URLs in scripts or plugins might cause failures or unexpected behavior.
+
+
+**what is the difference in name of the node and label in jenkins**
+
+1. Node (or Agent) -
+
+A node refers to a machine (physical or virtual) that Jenkins uses to execute builds.
+
+It could be the master node (where Jenkins is installed) or any additional agent nodes connected to the master.
+
+Each node has a unique name and specific configurations such as:
+
+A node might be named slave1 or windows-node to reflect its purpose or environment.
+
+2. Label -
+
+A label is a user-defined identifier that you can assign to one or more nodes.
+
+Labels are used in pipeline configurations to specify where a job or stage should run.
+
+Unlike node names, labels are not unique; multiple nodes can share the same label.
+
+A label could be linux, assigned to all Linux nodes.
+
+Another label could be high-memory, assigned to nodes with more RAM.
+
+Nodes can have multiple labels (e.g., a node could have both linux and high-memory labels).
+
+In the Labels field, add multiple labels, separated by spaces.
+
+For example, if you want to assign the labels linux, docker, and high-memory, you would enter:
+
+linux docker high-memory (maintain space)
+
+To target nodes with both linux and high-memory labels:
+
+agent { label 'linux && high-memory' }
+
+**Why Use Labels Instead of Node Names?**
+
+Flexibility: Labels allow you to group nodes by characteristics (e.g., OS, environment, hardware) instead of hardcoding specific node names in your pipeline.
+
+Scalability: If you add more nodes, you can assign them appropriate labels without changing your pipelines.
+
+Ease of Maintenance: Labels decouple pipeline configuration from specific node details, making it easier to manage changes.
+
+
+
+
+
