@@ -1,0 +1,30 @@
+## 1.How to install python boto3 on ubuntu
+
+Successfully installed boto3-1.35.76 botocore-1.35.76 jmespath-1.0.1 python-dateutil-2.9.0.post0 s3transfer-0.10.4 six-1.17.0 urllib3-2.2.3
+(myenv) ubuntu@ip-172-31-86-180:~$ python3 -c "import boto3; print(boto3.__version__)"
+1.35.76
+(myenv) ubuntu@ip-172-31-86-180:~$ history
+1  clear
+2  sudo apt update
+3  sudo apt install python3 python3-pip -y
+4  sudo apt install python3-venv -y
+5  python3 --version
+6  pip3 --version
+7  python3 -m venv myenv
+8  source myenv/bin/activate
+9  pip install boto3
+10  python3 -c "import boto3; print(boto3.__version__)"
+11  history
+
+(myenv) ubuntu@ip-172-31-86-180:~$
+
+## 2.Configure AWS-CLI
+(myenv) ubuntu@ip-172-31-86-180:/opt$ sudo snap install aws-cli --classic
+aws-cli (v2/stable) 2.22.12 from Amazon Web Services (aws✓) installed
+(myenv) ubuntu@ip-172-31-86-180:/opt$ aws configure
+AWS Access Key ID [None]: AK**********JDJDH765P5I 
+AWS Secret Access Key [None]: GA******************9zqWXbFIuQnUdu4
+Default region name [None]: us-east-1
+Default output format [None]:
+(myenv) ubuntu@ip-172-31-86-180:/opt$
+

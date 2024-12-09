@@ -436,6 +436,20 @@ Scalability: If you add more nodes, you can assign them appropriate labels witho
 
 Ease of Maintenance: Labels decouple pipeline configuration from specific node details, making it easier to manage changes.
 
+## 5. **Can we use multiple steps in stage block ?**
+:No
+
+example error block may look like this:
+
+"Started by user Abhishek Chavan
+
+Obtained Jenkinsfile from git git@github.com:abhichavan1311/maven-project.git
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+WorkflowScript: 26: Multiple occurrences of the steps section @ line 26, column 5.
+       stage('build')
+       ^
+
+
 
 
 
