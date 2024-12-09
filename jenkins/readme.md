@@ -162,7 +162,7 @@ yet to be added
 
 ## Additional Points
 
-1. Do we need maven installed on slave ?
+## **1. Do we need maven installed on slave ?**
 
 Ans: No, Maven Installed on Master (Available to Slave): If you’ve configured the Maven installation on the Jenkins master and the jobs are configured to use that installation, Jenkins can invoke Maven remotely on the slave without requiring Maven to be installed on the slave itself.
 
@@ -215,21 +215,21 @@ but my job ran successfully on it,checkout below logs
 ![Maven_project1](images/maven_project1.png)
 ![Maven_project2](images/maven_project2.png)
 
-**2. Jenkins defaults**
+## **2. Jenkins defaults**
 
-**JENKINS_HOME: ubuntu@ip-172-31-23-191:/var/lib/jenkins$ ls -lt**
+### **JENKINS_HOME: ubuntu@ip-172-31-23-191:/var/lib/jenkins$ ls -lt**
 
-**Important Files and Directories**
+### **Important Files and Directories**
 
-config.xml -
+## config.xml -
 Use: Stores Jenkins' global configuration, such as security settings, system settings, and tool configurations.
 Do not delete: Essential for Jenkins operation.
 
-jobs/ - 
+## jobs/ - 
 Use: Contains subdirectories for each job. Inside each job, you’ll find configurations (config.xml), build history, and other metadata.
 Important: This directory stores all job data and history.
 
-**/var/lib/jenkins/jobs contents:**
+### **/var/lib/jenkins/jobs contents:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins$ cd jobs/
 
@@ -284,7 +284,7 @@ drwxr-xr-x 3 jenkins jenkins  4096 Dec  3 12:27 archive
 -rw-r--r-- 1 jenkins jenkins   478 Dec  3 12:27 changelog2445842313786596415.xml
 
 
-**Important: Where does jenkins stores the artifacts:**
+### **Important: Where does jenkins stores the artifacts:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4/archive/target$ ls -lt
 
@@ -292,11 +292,11 @@ ubuntu@ip-172-31-23-191:/var/lib/jenkins/jobs/maven-project/builds/4/archive/tar
 
 
 
-workspace/ -
+## workspace/ -
 Use: Stores temporary files and build artifacts for each job's workspace during the build process.
 Safe to clean periodically: Only delete unused job workspaces to free space, as Jenkins can recreate them.
 
-plugins/ -
+## plugins/ -
 Use: Stores all Jenkins plugin .jpi or .hpi files.
 Do not delete: Needed for plugin functionality. Deleting plugins may cause Jenkins to break.
 
@@ -313,7 +313,7 @@ Use: Contains Jenkins system and build logs.
 Safe to clean periodically: Clear old logs to save space, as new logs will be generated.
 
 
-**WorkSpace:**
+## **WorkSpace:**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace$ ls -lt
 
@@ -324,7 +324,7 @@ drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 13:02 java-maven-sample-war-project
 drwxr-xr-x 6 jenkins jenkins 4096 Dec  3 11:55 maven-project\
 
 
-**what does project include?**
+## **what does project include?**
 
 ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project$ ls -lt
 
@@ -350,7 +350,7 @@ ubuntu@ip-172-31-23-191:/var/lib/jenkins/workspace/maven-project/jenkins$ ls -lt
 drwxr-xr-x 2 jenkins jenkins 4096 Dec  3 11:55 scripts
 
 
-**Importance of /etc/defaults/jenkins file:**
+## **Importance of /etc/defaults/jenkins file:**
 - Startup Configuration: It contains options that the jenkins service reads during startup, such as Java options, ports, and paths.
 - Environment Variables: Sets environment variables that the Jenkins process can use.
 - Customizations: Allows administrators to modify Jenkins settings without editing the main service file (e.g., /lib/systemd/system/jenkins.service).
@@ -365,35 +365,34 @@ drwxr-xr-x 2 jenkins jenkins 4096 Dec  3 11:55 scripts
         JENKINS_HOME=/var/lib/jenkins
 - Setup JAVA_HOME to avoid any java related confusions, specifically if you have multiple java installed.
 
-3. **Significance of Updating the Jenkins URL when the instance IP changed:**
+## 3. **Significance of Updating the Jenkins URL when the instance IP changed:**
 
-1. Webhook Integration (e.g., with GitHub or GitLab):
+    1. Webhook Integration (e.g., with GitHub or GitLab):
 
-Problem: Webhooks from version control systems (e.g., GitHub, GitLab) need to send payloads to Jenkins for triggering builds. These webhooks point to the Jenkins URL (e.g., http://<instance-ip>:8080 or https://jenkins.example.com).
-Impact: If the IP changes but the Jenkins URL in webhook settings isn't updated, the webhooks will fail because they can't reach the Jenkins instance.
+    Problem: Webhooks from version control systems (e.g., GitHub, GitLab) need to send payloads to Jenkins for triggering builds. These webhooks point to the Jenkins URL (e.g., http://<instance-ip>:8080 or https://jenkins.example.com).
+    Impact: If the IP changes but the Jenkins URL in webhook settings isn't updated, the webhooks will fail because they can't reach the Jenkins instance.
 
-2. Remote Access for Users and Tools:
+    2. Remote Access for Users and Tools:
 
-Problem: Users, build tools, and scripts often interact with Jenkins through its configured URL. If the IP address changes but the URL isn't updated, they won't be able to reach the Jenkins instance.
-Impact: This can lead to disruptions in CI/CD pipelines, failed builds, or inability to trigger jobs manually.
+    Problem: Users, build tools, and scripts often interact with Jenkins through its configured URL. If the IP address changes but the URL isn't updated, they won't be able to reach the Jenkins instance.
+    Impact: This can lead to disruptions in CI/CD pipelines, failed builds, or inability to trigger jobs manually.
 
-3. Agent Communication:
+    3. Agent Communication:
 
-Problem: Jenkins agents (slaves) communicate with the master via the Jenkins URL. If the URL is outdated, agents might fail to connect, disrupting builds running on those agents.
-Impact: The build system could partially or fully break, depending on the reliance on agents.
+    Problem: Jenkins agents (slaves) communicate with the master via the Jenkins URL. If the URL is outdated, agents might fail to connect, disrupting builds running on those agents.
+    Impact: The build system could partially or fully break, depending on the reliance on agents.
 
-4. Email Notifications and Links:
+    4. Email Notifications and Links:
 
-Problem: Jenkins includes the configured Jenkins URL in various notifications (e.g., email or Slack) and logs. If the URL is incorrect, links to the build dashboard or artifacts in these notifications will be broken.
-Impact: Users won't be able to easily navigate to Jenkins for debugging or reviewing builds.
+    Problem: Jenkins includes the configured Jenkins URL in various notifications (e.g., email or Slack) and logs. If the URL is incorrect, links to the build dashboard or artifacts in these notifications will be broken.
+    Impact: Users won't be able to easily navigate to Jenkins for debugging or reviewing builds.
 
-5. Scripts and Plugins:
+    5. Scripts and Plugins:
 
-Problem: Some Jenkins scripts or plugins rely on the configured Jenkins URL for accessing resources or triggering jobs.
-Impact: Outdated URLs in scripts or plugins might cause failures or unexpected behavior.
+    Problem: Some Jenkins scripts or plugins rely on the configured Jenkins URL for accessing resources or triggering jobs.
+    Impact: Outdated URLs in scripts or plugins might cause failures or unexpected behavior.
 
-
-4. **what is the difference in name of the node and label in jenkins**
+## 4. **what is the difference in name of the node and label in jenkins**
 
 1. Node (or Agent) -
 
