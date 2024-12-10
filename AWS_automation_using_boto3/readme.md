@@ -23,3 +23,9 @@
 ![task6_2](images/task6_2.png)
 ![task6_3](images/task6_3.png)
 ![task6_4](images/task6_4.png)
+
+## **Task7: 7.Importing_one_python_module_into_another**
+
+Example Output for task7: main_script2.py
+
+![task7](images/task7_1.png)
