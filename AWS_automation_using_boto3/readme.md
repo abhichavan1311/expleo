@@ -25,6 +25,9 @@
 ![task6_4](images/task6_4.png)
 
 ## **Task7: 7.Importing_one_python_module_into_another**
+For using the module structure your directory should look like this-
+
+![task7_2](images/task7_2.png)
 
 Example Output for task7: main_script2.py
 
