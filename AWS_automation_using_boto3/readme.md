@@ -29,3 +29,7 @@
 Example Output for task7: main_script2.py
 
 ![task7](images/task7_1.png)
+
+## **Task8: 8_create_IAM_role
+
+![task8](images/task8_1.png)
