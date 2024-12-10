@@ -57,3 +57,18 @@ With -E (i.e., sudo -E python3 Execute_script_from_github_url.py): The -E flag t
 
 ⚠️ Warning: Using exec can be risky as it directly runs the fetched code, which could include malicious instructions. Use only trusted URLs.
 
+
+## **Task11: 11_lambda_function**
+
+    - convert your .py file into .zip file on windows:
+
+    Compress-Archive -Path lambda_function.py -DestinationPath lambda_code.zip              
+
+Note: try to use "Try-Except Block" wherever you face any error which is not clear so that, The try-except block ensures that if there's any issue creating the rsource it will print the error message and help diagnose the problem.
+
+try-except block is a general way to handle exceptions and is commonly used for debugging in Python. It can be used anywhere in your code to catch exceptions, log the error, and optionally handle it in a way that doesn't cause your program to crash unexpectedly. It's a powerful tool for debugging and improving the robustness of your code.
+
+Example Output:
+![task11](images/task11_1.png)
+
+

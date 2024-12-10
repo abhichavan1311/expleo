@@ -1,0 +1,1 @@
+go to dir AWS_automation_using_boto3/11_Lambda_function/
