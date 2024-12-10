@@ -105,6 +105,22 @@ def create_s3_bucket(bucket_name, region, acl, versioning, encryption, object_lo
         )
         print(f"Tags added to the bucket: {tags}")
 
+        # Fetch the bucket location to confirm region and ARN
+        location_response = s3.get_bucket_location(Bucket=bucket_name)
+        bucket_region = location_response['LocationConstraint'] or 'us-east-1'  # Default region is 'us-east-1'
+        
+        # Construct the ARN
+        bucket_arn = f"arn:aws:s3:::{bucket_name}"
+
+        # Construct the endpoint URL
+        endpoint_url = f"https://{bucket_name}.s3.{bucket_region}.amazonaws.com"
+
+        # Output the ARN and endpoint
+        print(f"S3 Bucket ARN: {bucket_arn}")
+        print(f"S3 Bucket Endpoint: {endpoint_url}")
+
+        return bucket_arn, endpoint_url
+
     except NoCredentialsError:
         print("No AWS credentials found. Please configure your AWS credentials.")
     except PartialCredentialsError:
@@ -118,15 +134,20 @@ if __name__ == "__main__":
         # Get user input for S3 bucket parameters
         bucket_name, region, acl, versioning, encryption, object_lock, object_ownership, tags = get_user_input()
 
-        # Create the S3 bucket with the provided inputs
-        create_s3_bucket(bucket_name, region, acl, versioning, encryption, object_lock, object_ownership, tags)
+        # Create the S3 bucket with the provided inputs and fetch the ARN and endpoint
+        bucket_arn, endpoint_url = create_s3_bucket(bucket_name, region, acl, versioning, encryption, object_lock, object_ownership, tags)
+
+        # Optionally, you can print the ARN and endpoint here as well
+        print(f"Created S3 bucket with ARN: {bucket_arn}")
+        print(f"Bucket endpoint: {endpoint_url}")
     except ValueError as e:
         print(f"Error: {e}")
+
 
 '''
 Example Output:
 
-(myenv) ubuntu@ip-172-31-86-180:/opt$ python3 create_s3.py
+ubuntu@ip-172-31-86-180:/opt$ python3 s3_updated.py
 Enter the S3 Bucket Name (default abhi-test-bucket-udd):
 Enter AWS region (default us-east-1):
 Enter ACL for the bucket (private, public-read, public-read-write, authenticated-read; default private):
@@ -134,14 +155,18 @@ Enable Versioning? (True/False, default False):
 Choose encryption type (AES256, aws:kms, or None to disable encryption, default None):
 Enable Object Lock for the bucket? (True/False, default False):
 Set Object Ownership (BucketOwnerEnforced, ObjectWriter, BucketOwnerPreferred; default BucketOwnerPreferred):
-
 Enter tags for the bucket in the format 'Key=Value'. Type 'done' when finished.
+Enter tag (or 'done' to finish): env=prod
+Enter tag (or 'done' to finish): created_by=Abhishek_Chavan
 Enter tag (or 'done' to finish): done
 S3 Bucket 'abhi-test-bucket-udd' created successfully in region 'us-east-1'.
 Public access blocked for the bucket.
 Encryption is disabled for the bucket.
-Tags added to the bucket: [{'Key': 'Project', 'Value': 'Demo'}]
-
-For more detailed output, please refer to screenshots in /AWS automation using boto3/readme.md
+Tags added to the bucket: [{'Key': 'env', 'Value': 'prod'}, {'Key': 'created_by', 'Value': 'Abhishek_Chavan'}]
+S3 Bucket ARN: arn:aws:s3:::abhi-test-bucket-udd
+S3 Bucket Endpoint: https://abhi-test-bucket-udd.s3.us-east-1.amazonaws.com
+Created S3 bucket with ARN: arn:aws:s3:::abhi-test-bucket-udd
+Bucket endpoint: https://abhi-test-bucket-udd.s3.us-east-1.amazonaws.com
+ubuntu@ip-172-31-86-180:/opt$
 
 '''
