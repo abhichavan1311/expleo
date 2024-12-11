@@ -1,4 +1,4 @@
-refer dir AWS_automation_using_boto3/Importing_one_python_module_into_another/
+refer dir AWS_automation_using_boto3/7_Importing_one_python_module_into_another/
 
 2 tasks are mentioned here - 
 simple task: main_script1.py
