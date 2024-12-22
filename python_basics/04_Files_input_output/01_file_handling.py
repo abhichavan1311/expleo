@@ -31,3 +31,10 @@ Hello, binary world!
 Hello, binary world!
 This is the new content of the file.
 '''
+
+'''Important Note:
+For above scenarios do i need to use file.close function ?
+-
+No, you do not need to explicitly use file.close() in your scenarios.
+
+In your code, you are using the with statement to open the files, which automatically handles closing the file when the block of code inside the with statement is executed, even if an exception occurs.'''
