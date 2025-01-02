@@ -71,4 +71,14 @@ try-except block is a general way to handle exceptions and is commonly used for 
 Example Output:
 ![task11](images/task11_1.png)
 
+## **Task12: Dynamic AWS profile management**
+manage_AWS_CLI_profiles_dynamically
+
+## **Task13: Dynamic AWS profile management**
+create_upload_s3_dynamically
+
+Example Output:
+![task13](images/task13.png)
+
+
 
